@@ -15,4 +15,6 @@ Information required:
   
   Update intervals are user configurable for Archive, Records update, Ambient Weather update and Weatherbridge/Meteobridge update.
   
+  A snapshop of the Records tab is saved at midnight each night.
+  
   
