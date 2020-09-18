@@ -1,4 +1,7 @@
 # WeatherBridgeDataArchive
+
+VB.Net Framework 4.8 (NewtonSoft.Json 12.03 required)
+
 Easily archive your Weatherbridge/Meteobridge data to .CSV files.  Downloads you ambient Weather information from AmbientWeather.net.  Updates your records for All-time, This year, This month, Yesterday and Today.
 
 Information required:
