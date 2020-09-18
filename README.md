@@ -20,11 +20,12 @@ Information required:
     
     APP Key
     
+    Ambient Station Name
+  
+    Year Station started.
+  
+    
   Elevation (Ft)
-  
-  Ambient Station Name
-  
-  Year Station started.
   
   
   Update intervals are user configurable for Archive, Records update, Ambient Weather update and Weatherbridge/Meteobridge update.
