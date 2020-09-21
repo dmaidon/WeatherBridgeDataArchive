@@ -98,7 +98,7 @@ Friend Module RecordsRoutines
 
                 .Rows(5).Cells(5).Value = $"{Gwd("wind*chill-dmin=F.1:*")}°F{vbLf}{a}"
                 .Rows(6).Cells(5).Value = $"{Gwd("th*heatindex-dmax=F.1:*")}°F{vbLf}{b}"
-                .Rows(7).Cells(5).Value = $"Hi: {Gwd("thb*press-dmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-hmin=inHg.2:*")} in"
+                .Rows(7).Cells(5).Value = $"Hi: {Gwd("thb*press-dmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-dmin=inHg.2:*")} in"
 
             End With
         Catch ex As Exception When TypeOf ex Is ArgumentNullException OrElse TypeOf ex Is FormatException OrElse TypeOf ex Is ArgumentOutOfRangeException
@@ -142,7 +142,7 @@ Friend Module RecordsRoutines
 
                 .Rows(5).Cells(4).Value = $"{Gwd("wind*chill-ydmin=F.1:*")}°F{vbLf}{a}"
                 .Rows(6).Cells(4).Value = $"{Gwd("th*heatindex-ydmax=F.1:*")}°F{vbLf}{b}"
-                .Rows(7).Cells(4).Value = $"Hi: {Gwd("thb*press-ydmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-hmin=inHg.2:*")} in"
+                .Rows(7).Cells(4).Value = $"Hi: {Gwd("thb*press-ydmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-ydmin=inHg.2:*")} in"
             End With
         Catch ex As Exception
             PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)
@@ -181,7 +181,7 @@ Friend Module RecordsRoutines
 
                 .Rows(5).Cells(3).Value = $"{Gwd("wind*chill-mmin=F.1:*")}°F{vbLf}{a}"
                 .Rows(6).Cells(3).Value = $"{Gwd("th*heatindex-mmax=F.1:*")}°F{vbLf}{b}"
-                .Rows(7).Cells(3).Value = $"Hi: {Gwd("thb*press-mmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-hmin=inHg.2:*")} in"
+                .Rows(7).Cells(3).Value = $"Hi: {Gwd("thb*press-mmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-mmin=inHg.2:*")} in"
             End With
         Catch ex As Exception
             PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)
@@ -219,7 +219,7 @@ Friend Module RecordsRoutines
 
                 .Rows(5).Cells(2).Value = $"{Gwd("wind*chill-ymin=F.1:*")}°F{vbLf}{a}"
                 .Rows(6).Cells(2).Value = $"{Gwd("th*heatindex-ymax=F.1:*")}°F{vbLf}{b}"
-                .Rows(7).Cells(2).Value = $"Hi: {Gwd("thb*press-ymax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-hmin=inHg.2:*")} in"
+                .Rows(7).Cells(2).Value = $"Hi: {Gwd("thb*press-ymax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-ymin=inHg.2:*")} in"
             End With
         Catch ex As Exception
             PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)
@@ -263,7 +263,7 @@ Friend Module RecordsRoutines
 
                 .Rows(5).Cells(1).Value = $"{Gwd("wind*chill-amin=F.1:*")}°F{vbLf}{a}"
                 .Rows(6).Cells(1).Value = $"{Gwd("th*heatindex-amax=F.1:*")}°F{vbLf}{b}"
-                .Rows(7).Cells(1).Value = $"Hi: {Gwd("thb*press-amax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-hmin=inHg.2:*")} in"
+                .Rows(7).Cells(1).Value = $"Hi: {Gwd("thb*press-amax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-amin=inHg.2:*")} in"
             End With
         Catch ex As Exception
             PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)
