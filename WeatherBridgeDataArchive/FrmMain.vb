@@ -62,7 +62,6 @@ Public Class FrmMain
             FetchAmbientData()
         End If
 
-
         'WeatherBridge data update (Default: 15 minutes)
         If WbEnable Then
             wbDuration = New TimeSpan(0, My.Settings.WbUpdateInt, 0)
@@ -120,6 +119,7 @@ Public Class FrmMain
 
     Private Sub FrmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         My.Settings.Save()
+        'just some debug logging
         'If Flag Then
         '    PrintLog($"Width: {Width}    Height: {Height}{vbLf}")
         '    'With DgvRecords
@@ -181,7 +181,6 @@ Public Class FrmMain
         My.Settings.Save()
     End Sub
 
-
     Private Sub NumHrUdt_ValueChanged(sender As Object, e As EventArgs) Handles NumRecordUpdate.ValueChanged
         My.Settings.RecUpDateInt = CInt(NumRecordUpdate.Value)
         My.Settings.Save()
@@ -191,7 +190,6 @@ Public Class FrmMain
         My.Settings.WbUpdateInt = CInt(NumWbUpdateInt.Value)
         My.Settings.Save()
     End Sub
-
 
     'Private Sub ChkEnableAmbient_CheckedChanged(sender As Object, e As EventArgs) Handles ChkEnableAmbient.CheckedChanged
     '    My.Settings.AmbientEnable = ChkEnableAmbient.Checked
@@ -222,7 +220,6 @@ Public Class FrmMain
         End Select
         My.Settings.Save()
     End Sub
-
 
 #End Region
 
@@ -296,7 +293,7 @@ Public Class FrmMain
                 Case 4
                     UpDateYearHiLo()
                 Case 5
-                    UpdateAllTimeHiLo
+                    UpdateAllTimeHiLo()
                 Case Else
                     Return
             End Select
@@ -310,7 +307,6 @@ Public Class FrmMain
         ArcNextUpdate = Date.Now + ArcDuration
         WriteCurrentData()
     End Sub
-
 
     Private Sub TmrAmbUpdate_Elapsed(sender As Object, e As Timers.ElapsedEventArgs) Handles TmrAmbUpdate.Elapsed
         AmbDuration = New TimeSpan(0, My.Settings.AmbientUpdateInt, 0)
@@ -327,9 +323,6 @@ Public Class FrmMain
     Private Sub BtnRunEvents_Click(sender As Object, e As EventArgs) Handles BtnRunEvents.Click
         RunPostEvents()
     End Sub
-
-
-
 
 #End Region
 

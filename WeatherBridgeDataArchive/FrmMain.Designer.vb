@@ -42,8 +42,8 @@ Partial Class FrmMain
         Me.TpWeatherBridge = New System.Windows.Forms.TabPage()
         Me.DgvWb = New System.Windows.Forms.DataGridView()
         Me.TpLogs = New System.Windows.Forms.TabPage()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.RtbLog = New System.Windows.Forms.RichTextBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TpOptions = New System.Windows.Forms.TabPage()
         Me.Panel10 = New System.Windows.Forms.Panel()
         Me.BtnRunEvents = New System.Windows.Forms.Button()
@@ -80,8 +80,8 @@ Partial Class FrmMain
         Me.Label27 = New System.Windows.Forms.Label()
         Me.Ss1 = New System.Windows.Forms.StatusStrip()
         Me.TsslVer = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.TsslRecordUpdate = New System.Windows.Forms.ToolStripStatusLabel()
         Me.TsslArchiveUpdate = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.TsslRecordUpdate = New System.Windows.Forms.ToolStripStatusLabel()
         Me.TsslAmbientUpdate = New System.Windows.Forms.ToolStripStatusLabel()
         Me.TsslWbUpdate = New System.Windows.Forms.ToolStripStatusLabel()
         Me.TsslCpy = New System.Windows.Forms.ToolStripStatusLabel()
@@ -345,24 +345,14 @@ Partial Class FrmMain
         'TpLogs
         '
         Me.TpLogs.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(240, Byte), Integer))
-        Me.TpLogs.Controls.Add(Me.PictureBox1)
         Me.TpLogs.Controls.Add(Me.RtbLog)
+        Me.TpLogs.Controls.Add(Me.PictureBox1)
         Me.TpLogs.Location = New System.Drawing.Point(4, 26)
         Me.TpLogs.Name = "TpLogs"
         Me.TpLogs.Padding = New System.Windows.Forms.Padding(3)
         Me.TpLogs.Size = New System.Drawing.Size(778, 316)
         Me.TpLogs.TabIndex = 1
         Me.TpLogs.Text = "Logs"
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = Global.WeatherBridgeDataArchive.My.Resources.Resources.PS_LOGO_transparent_190x150
-        Me.PictureBox1.Location = New System.Drawing.Point(558, 95)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(160, 126)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox1.TabIndex = 1
-        Me.PictureBox1.TabStop = False
         '
         'RtbLog
         '
@@ -375,6 +365,16 @@ Partial Class FrmMain
         Me.RtbLog.Size = New System.Drawing.Size(494, 310)
         Me.RtbLog.TabIndex = 0
         Me.RtbLog.Text = ""
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = Global.WeatherBridgeDataArchive.My.Resources.Resources.PS_LOGO_transparent_190x150
+        Me.PictureBox1.Location = New System.Drawing.Point(558, 95)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(160, 126)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox1.TabIndex = 1
+        Me.PictureBox1.TabStop = False
         '
         'TpOptions
         '
@@ -762,7 +762,7 @@ Partial Class FrmMain
         Me.Ss1.Font = New System.Drawing.Font("Segoe UI", 7.0!)
         Me.Ss1.GripMargin = New System.Windows.Forms.Padding(0)
         Me.Ss1.ImageScalingSize = New System.Drawing.Size(24, 24)
-        Me.Ss1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TsslVer, Me.TsslRecordUpdate, Me.TsslArchiveUpdate, Me.TsslAmbientUpdate, Me.TsslWbUpdate, Me.TsslCpy})
+        Me.Ss1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TsslVer, Me.TsslArchiveUpdate, Me.TsslRecordUpdate, Me.TsslAmbientUpdate, Me.TsslWbUpdate, Me.TsslCpy})
         Me.Ss1.Location = New System.Drawing.Point(0, 359)
         Me.Ss1.Name = "Ss1"
         Me.Ss1.Padding = New System.Windows.Forms.Padding(1, 0, 12, 0)
@@ -777,14 +777,6 @@ Partial Class FrmMain
         Me.TsslVer.Size = New System.Drawing.Size(16, 19)
         Me.TsslVer.Text = "v"
         '
-        'TsslRecordUpdate
-        '
-        Me.TsslRecordUpdate.BackColor = System.Drawing.Color.Honeydew
-        Me.TsslRecordUpdate.Name = "TsslRecordUpdate"
-        Me.TsslRecordUpdate.Size = New System.Drawing.Size(15, 19)
-        Me.TsslRecordUpdate.Text = "-"
-        Me.TsslRecordUpdate.ToolTipText = "Time to next" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Records update"
-        '
         'TsslArchiveUpdate
         '
         Me.TsslArchiveUpdate.BackColor = System.Drawing.Color.SeaShell
@@ -792,6 +784,14 @@ Partial Class FrmMain
         Me.TsslArchiveUpdate.Size = New System.Drawing.Size(15, 19)
         Me.TsslArchiveUpdate.Text = "-"
         Me.TsslArchiveUpdate.ToolTipText = "Time to next" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Archive update"
+        '
+        'TsslRecordUpdate
+        '
+        Me.TsslRecordUpdate.BackColor = System.Drawing.Color.Honeydew
+        Me.TsslRecordUpdate.Name = "TsslRecordUpdate"
+        Me.TsslRecordUpdate.Size = New System.Drawing.Size(15, 19)
+        Me.TsslRecordUpdate.Text = "-"
+        Me.TsslRecordUpdate.ToolTipText = "Time to next" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Records update"
         '
         'TsslAmbientUpdate
         '

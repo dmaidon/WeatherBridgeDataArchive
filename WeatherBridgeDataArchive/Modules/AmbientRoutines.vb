@@ -11,7 +11,6 @@ Friend Module AmbientRoutines
     ''https://api.ambientweather.net/v1/devices?applicationKey=AAAA%26apiKey=BBBB
     ''https://www.meteobridge.com/wiki/index.php/Templates
 
-
     Friend Sub FetchAmbientData()
         If Not AmbientEnable Then
             Return
@@ -31,10 +30,10 @@ Friend Module AmbientRoutines
         End If
 
     End Sub
+
     Friend Async Sub DownloadAmbientData()
 
         Dim resp As String
-
 
         Dim Use_Agent As String = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36 Edg/85.0.564.44"
 
@@ -78,8 +77,7 @@ Friend Module AmbientRoutines
             PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)
         Finally
             SaveLogs()
-            End Try
-
+        End Try
 
     End Sub
 
