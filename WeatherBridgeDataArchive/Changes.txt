@@ -1,0 +1,5 @@
+﻿September 21, 2020
+	1. Corrected Daily, Monthly, Yesterday, Monthly, Yearly and all-time barometric pressure records.  They were all registering for hourly.
+
+September 18, 2020  
+	Initial release.
