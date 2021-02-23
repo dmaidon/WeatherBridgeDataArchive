@@ -21,9 +21,7 @@ Information required:
     APP Key
     
     Ambient Station Name
-  
-    Year Station started.
-  
+   
     
   Elevation (Ft)
   
