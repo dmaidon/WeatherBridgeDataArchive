@@ -74,16 +74,6 @@ Friend Module SettingsRoutines
                 LogHdrData = My.Settings.LogHdrData
                 .ChkLogHdrData.Checked = LogHdrData
 
-                'sets the year that the station was started.  this info is used for the all-time records
-                If String.IsNullOrEmpty(My.Settings.YearStarted) Then
-                    .TxtYearStarted.Text = $"{Now.Year}"
-                    My.Settings.YearStarted = $"{Now.Year}"
-                Else
-                    .TxtYearStarted.Text = My.Settings.YearStarted
-                End If
-
-
-
                 If String.IsNullOrEmpty(My.Settings.ApiKey) OrElse String.IsNullOrEmpty(My.Settings.AppKey) OrElse String.IsNullOrEmpty(My.Settings.wbLogin) OrElse String.IsNullOrEmpty(My.Settings.wbPassword) OrElse String.IsNullOrEmpty(My.Settings.wbIp) Then
                     Throw New ArgumentException($"{NameOf(ApiKey)}/{AppKey} cannot be empty.")
                 Else

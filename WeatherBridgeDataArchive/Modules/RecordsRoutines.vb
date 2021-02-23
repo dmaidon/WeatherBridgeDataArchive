@@ -1,5 +1,4 @@
 ﻿Imports System.Globalization
-Imports System.Net
 Imports System.Text
 
 Friend Module RecordsRoutines
@@ -10,13 +9,7 @@ Friend Module RecordsRoutines
 
     Friend Sub CreateRecordsGrid()
         With FrmMain.DgvRecords
-            Dim atTxt As String
-            If CInt(My.Settings.YearStarted) = Now.Year Then
-                atTxt = $"{Now:yyyy}"
-            Else
-                atTxt = $"{My.Settings.YearStarted}-{Now:yy}"
-            End If
-            .Rows.Add("", atTxt, Now.Year, $"{Now:MMMM}", $"{Date.Now.AddDays(-1):MMM d}", $"{Now:MMM d}", $"{Now:t}")
+            .Rows.Add("", "", Now.Year, $"{Now:MMMM}", $"{Date.Now.AddDays(-1):MMM d}", $"{Now:MMM d}", $"{Now:t}")
             .Rows.Add($"High{vbLf}Temperature")
             .Rows.Add($"Low{vbLf}Temperature")
             .Rows.Add($"Wind{vbLf}Maximum")
@@ -37,35 +30,42 @@ Friend Module RecordsRoutines
         End With
     End Sub
 
-
-
-    Friend Sub UpdateHourHiLo()
+    Friend Sub UpdateAllTimeHiLo()
         Try
             With FrmMain.DgvRecords
                 Dim provider As CultureInfo = CultureInfo.InvariantCulture
                 Dim a As String
-                .Rows(0).Cells(6).Value = $"{Now:h:mm tt}"
-                .Rows(0).Cells(6).ToolTipText = $"{Now:F}"
-                .Rows(1).Cells(6).Value = $"{Gwd("th*temp-hmax=F.1:*")}°F"
-                .Rows(2).Cells(6).Value = $"{Gwd("th*temp-hmin=F.1:*")}°F"
+                Dim b As String
+                a = Gwd("th*temp-amaxtime:*")
+                a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
+                b = Gwd("th*temp-amintime:*")
+                b = If(b = "*", "", $"({Date.ParseExact(b, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
 
-                a = Gwd("wind*wind-hmaxtime:*")
-                a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt2, CultureInfo.CurrentCulture)})")
-                .Rows(3).Cells(6).Value = $"{Gwd("wind*wind-hmax=mph.1:*")} mph{vbLf}{a}"
-                .Rows(4).Cells(6).Value = $"{Gwd("rain*total-hoursum=in.2:*")} in"
+                'get the year of the first temp record.  Use this for the begin-end header for the All-Time records
+                .Rows(0).Cells(1).Value = $"{Left($"{Gwd("th*temp-starttime")}", 4)}-{Now:yyyy}"
+                .Rows(1).Cells(1).Value = $"{Gwd("th*temp-amax=F.1:*")}°F{vbLf}{a}"
+                .Rows(2).Cells(1).Value = $"{Gwd("th*temp-amin=F.1:*")}°F{vbLf}{b}"
 
-                .Rows(5).Cells(6).Value = $"{Gwd("wind*chill-hmin=F.1:*")}°F"
-                .Rows(6).Cells(6).Value = $"{Gwd("th*heatindex-hmax=F.1:*")}°F"
-                .Rows(7).Cells(6).Value = $"Hi: {Gwd("thb*press-hmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-hmin=inHg.2:*")} in"
+                a = Gwd("wind*wind-ymaxtime:*")
+                a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
+                .Rows(3).Cells(1).Value = $"{Gwd("wind*wind-amax=mph.1:*")} mph{vbLf}{a}"
+                .Rows(4).Cells(1).Value = $"{Gwd("rain*total-allsum=in.2:*")} in"
 
-                PrintLog($"Updated Records @ {Now:F}{vbLf}")
+                a = Gwd("wind*chill-amintime:*")
+                a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
+                b = Gwd("th*heatindex-amaxtime:*")
+                b = If(b = "*", "", $"({Date.ParseExact(b, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
+
+                .Rows(5).Cells(1).Value = $"{Gwd("wind*chill-amin=F.1:*")}°F{vbLf}{a}"
+                .Rows(6).Cells(1).Value = $"{Gwd("th*heatindex-amax=F.1:*")}°F{vbLf}{b}"
+                .Rows(7).Cells(1).Value = $"Hi: {Gwd("thb*press-amax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-amin=inHg.2:*")} in"
             End With
+            'MsgBox($"{CDate(Gwd("th*temp-starttime")):yyyy}")
         Catch ex As Exception
             PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)
         Finally
             'a
         End Try
-
     End Sub
 
     Friend Sub UpdateDailyHiLo()
@@ -109,40 +109,26 @@ Friend Module RecordsRoutines
 
     End Sub
 
-    Friend Sub UpdateYesterdayHiLo()
+    Friend Sub UpdateHourHiLo()
         Try
-            Dim provider As CultureInfo = CultureInfo.InvariantCulture
-            Dim a As String
-            Dim b As String
             With FrmMain.DgvRecords
-                a = Gwd("th*temp-ydmaxtime:*")
+                Dim provider As CultureInfo = CultureInfo.InvariantCulture
+                Dim a As String
+                .Rows(0).Cells(6).Value = $"{Now:h:mm tt}"
+                .Rows(0).Cells(6).ToolTipText = $"{Now:F}"
+                .Rows(1).Cells(6).Value = $"{Gwd("th*temp-hmax=F.1:*")}°F"
+                .Rows(2).Cells(6).Value = $"{Gwd("th*temp-hmin=F.1:*")}°F"
+
+                a = Gwd("wind*wind-hmaxtime:*")
                 a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt2, CultureInfo.CurrentCulture)})")
-                b = Gwd("th*temp-ydmintime:*")
-                b = If(b = "*", "", $"({Date.ParseExact(b, fmt1, provider).ToString(fmt2, CultureInfo.CurrentCulture)})")
-                .Rows(0).Cells(4).Value = $"{Now.AddDays(-1):MMM d}"
-                .Rows(0).Cells(4).ToolTipText = $"{Now:F}"
-                .Rows(1).Cells(4).Value = $"{Gwd("th*temp-ydmax=F.1:*")}°F{vbLf}{a}"
-                .Rows(2).Cells(4).Value = $"{Gwd("th*temp-ydmin=F.1:*")}°F{vbLf}{b}"
+                .Rows(3).Cells(6).Value = $"{Gwd("wind*wind-hmax=mph.1:*")} mph{vbLf}{a}"
+                .Rows(4).Cells(6).Value = $"{Gwd("rain*total-hoursum=in.2:*")} in"
 
-                a = Gwd("wind*wind-ydmaxtime:*")
-                a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt2, CultureInfo.CurrentCulture)})")
-                .Rows(3).Cells(4).Value = $"{Gwd("wind*wind-ydmax=mph.1:*")} mph{vbLf}{a}"
-                .Rows(4).Cells(4).Value = $"{Gwd("rain*total-ydaysum=in.2:*")} in"
+                .Rows(5).Cells(6).Value = $"{Gwd("wind*chill-hmin=F.1:*")}°F"
+                .Rows(6).Cells(6).Value = $"{Gwd("th*heatindex-hmax=F.1:*")}°F"
+                .Rows(7).Cells(6).Value = $"Hi: {Gwd("thb*press-hmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-hmin=inHg.2:*")} in"
 
-                Try
-                    a = Gwd("wind*chill-ydmintime:*")
-                    a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt2, CultureInfo.CurrentCulture)})")
-                    b = Gwd("th*heatindex-ydmaxtime:*")
-                    b = If(b = "*", "", $"({Date.ParseExact(b, fmt1, provider).ToString(fmt2, CultureInfo.CurrentCulture)})")
-                Catch ex As Exception
-                    PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)
-                Finally
-                    'a
-                End Try
-
-                .Rows(5).Cells(4).Value = $"{Gwd("wind*chill-ydmin=F.1:*")}°F{vbLf}{a}"
-                .Rows(6).Cells(4).Value = $"{Gwd("th*heatindex-ydmax=F.1:*")}°F{vbLf}{b}"
-                .Rows(7).Cells(4).Value = $"Hi: {Gwd("thb*press-ydmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-ydmin=inHg.2:*")} in"
+                PrintLog($"Updated Records @ {Now:F}{vbLf}")
             End With
         Catch ex As Exception
             PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)
@@ -228,47 +214,47 @@ Friend Module RecordsRoutines
         End Try
     End Sub
 
-    Friend Sub UpdateAllTimeHiLo()
+    Friend Sub UpdateYesterdayHiLo()
         Try
+            Dim provider As CultureInfo = CultureInfo.InvariantCulture
+            Dim a As String
+            Dim b As String
             With FrmMain.DgvRecords
-                Dim provider As CultureInfo = CultureInfo.InvariantCulture
-                Dim a As String
-                Dim b As String
-                a = Gwd("th*temp-amaxtime:*")
-                a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
-                b = Gwd("th*temp-amintime:*")
-                b = If(b = "*", "", $"({Date.ParseExact(b, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
+                a = Gwd("th*temp-ydmaxtime:*")
+                a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt2, CultureInfo.CurrentCulture)})")
+                b = Gwd("th*temp-ydmintime:*")
+                b = If(b = "*", "", $"({Date.ParseExact(b, fmt1, provider).ToString(fmt2, CultureInfo.CurrentCulture)})")
+                .Rows(0).Cells(4).Value = $"{Now.AddDays(-1):MMM d}"
+                .Rows(0).Cells(4).ToolTipText = $"{Now:F}"
+                .Rows(1).Cells(4).Value = $"{Gwd("th*temp-ydmax=F.1:*")}°F{vbLf}{a}"
+                .Rows(2).Cells(4).Value = $"{Gwd("th*temp-ydmin=F.1:*")}°F{vbLf}{b}"
 
-                'added this so that if the Year Started is changed in the options, the cell will change on next update
-                Dim atTxt As String
-                If CInt(My.Settings.YearStarted) = Now.Year Then
-                    atTxt = $"{Now:yyyy}"
-                Else
-                    atTxt = $"{My.Settings.YearStarted}-{Now:yy}"
-                End If
+                a = Gwd("wind*wind-ydmaxtime:*")
+                a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt2, CultureInfo.CurrentCulture)})")
+                .Rows(3).Cells(4).Value = $"{Gwd("wind*wind-ydmax=mph.1:*")} mph{vbLf}{a}"
+                .Rows(4).Cells(4).Value = $"{Gwd("rain*total-ydaysum=in.2:*")} in"
 
-                .Rows(0).Cells(1).Value = atTxt
-                .Rows(1).Cells(1).Value = $"{Gwd("th*temp-amax=F.1:*")}°F{vbLf}{a}"
-                .Rows(2).Cells(1).Value = $"{Gwd("th*temp-amin=F.1:*")}°F{vbLf}{b}"
+                Try
+                    a = Gwd("wind*chill-ydmintime:*")
+                    a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt2, CultureInfo.CurrentCulture)})")
+                    b = Gwd("th*heatindex-ydmaxtime:*")
+                    b = If(b = "*", "", $"({Date.ParseExact(b, fmt1, provider).ToString(fmt2, CultureInfo.CurrentCulture)})")
+                Catch ex As Exception
+                    PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)
+                Finally
+                    'a
+                End Try
 
-                a = Gwd("wind*wind-ymaxtime:*")
-                a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
-                .Rows(3).Cells(1).Value = $"{Gwd("wind*wind-amax=mph.1:*")} mph{vbLf}{a}"
-                .Rows(4).Cells(1).Value = $"{Gwd("rain*total-allsum=in.2:*")} in"
-
-                a = Gwd("wind*chill-amintime:*")
-                a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
-                b = Gwd("th*heatindex-amaxtime:*")
-                b = If(b = "*", "", $"({Date.ParseExact(b, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
-
-                .Rows(5).Cells(1).Value = $"{Gwd("wind*chill-amin=F.1:*")}°F{vbLf}{a}"
-                .Rows(6).Cells(1).Value = $"{Gwd("th*heatindex-amax=F.1:*")}°F{vbLf}{b}"
-                .Rows(7).Cells(1).Value = $"Hi: {Gwd("thb*press-amax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-amin=inHg.2:*")} in"
+                .Rows(5).Cells(4).Value = $"{Gwd("wind*chill-ydmin=F.1:*")}°F{vbLf}{a}"
+                .Rows(6).Cells(4).Value = $"{Gwd("th*heatindex-ydmax=F.1:*")}°F{vbLf}{b}"
+                .Rows(7).Cells(4).Value = $"Hi: {Gwd("thb*press-ydmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-ydmin=inHg.2:*")} in"
             End With
         Catch ex As Exception
             PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)
         Finally
             'a
         End Try
+
     End Sub
+
 End Module

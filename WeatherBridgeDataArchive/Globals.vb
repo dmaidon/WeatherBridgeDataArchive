@@ -11,7 +11,7 @@ Friend Module Globals
 
     Public LogFile, ArcDirYr As String
     Public AppKey, ApiKey As String
-    Public Cpy As String = "©2020 PAROLE Software - all rights reserved."
+    Public Cpy As String = $"©2020-{Now:yyyy} PAROLE Software - all rights reserved."
 
     'Records update
     Public RecDuration As TimeSpan

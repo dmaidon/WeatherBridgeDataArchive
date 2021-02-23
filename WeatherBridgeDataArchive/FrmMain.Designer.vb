@@ -49,8 +49,6 @@ Partial Class FrmMain
         Me.BtnRunEvents = New System.Windows.Forms.Button()
         Me.ChkEnableWb = New System.Windows.Forms.CheckBox()
         Me.ChkLogHdrData = New System.Windows.Forms.CheckBox()
-        Me.TxtYearStarted = New System.Windows.Forms.TextBox()
-        Me.Label7 = New System.Windows.Forms.Label()
         Me.NumWbUpdateInt = New System.Windows.Forms.NumericUpDown()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.NumAmbientUpdate = New System.Windows.Forms.NumericUpDown()
@@ -394,8 +392,6 @@ Partial Class FrmMain
         Me.Panel10.Controls.Add(Me.BtnRunEvents)
         Me.Panel10.Controls.Add(Me.ChkEnableWb)
         Me.Panel10.Controls.Add(Me.ChkLogHdrData)
-        Me.Panel10.Controls.Add(Me.TxtYearStarted)
-        Me.Panel10.Controls.Add(Me.Label7)
         Me.Panel10.Controls.Add(Me.NumWbUpdateInt)
         Me.Panel10.Controls.Add(Me.Label6)
         Me.Panel10.Controls.Add(Me.NumAmbientUpdate)
@@ -460,26 +456,6 @@ Partial Class FrmMain
         Me.ChkLogHdrData.Tag = "2"
         Me.ChkLogHdrData.Text = "Log Header Data"
         Me.ChkLogHdrData.UseVisualStyleBackColor = True
-        '
-        'TxtYearStarted
-        '
-        Me.TxtYearStarted.Location = New System.Drawing.Point(519, 264)
-        Me.TxtYearStarted.Margin = New System.Windows.Forms.Padding(4)
-        Me.TxtYearStarted.Name = "TxtYearStarted"
-        Me.TxtYearStarted.Size = New System.Drawing.Size(82, 23)
-        Me.TxtYearStarted.TabIndex = 31
-        Me.TxtYearStarted.Tag = "6"
-        Me.Ttip.SetToolTip(Me.TxtYearStarted, "Weatherbridge/Meteobridge " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "login name")
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(383, 267)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(136, 17)
-        Me.Label7.TabIndex = 32
-        Me.Label7.Text = "Year Station Started"
         '
         'NumWbUpdateInt
         '
@@ -966,8 +942,6 @@ Partial Class FrmMain
     Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
     Friend WithEvents Column4 As DataGridViewTextBoxColumn
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
-    Friend WithEvents TxtYearStarted As TextBox
-    Friend WithEvents Label7 As Label
     Friend WithEvents ChkLogHdrData As CheckBox
     Friend WithEvents ChkEnableWb As CheckBox
     Friend WithEvents BtnRunEvents As Button

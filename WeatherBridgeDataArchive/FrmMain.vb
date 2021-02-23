@@ -11,6 +11,35 @@ Public Class FrmMain
     'flag for monthly rollover
     Private _moFlag As Boolean
 
+    ''' <summary>
+    ''' Automatically upgrade application settings for new versions
+    ''' </summary>
+    Private Shared Sub UpgradeMySettings()
+        'https://stackoverflow.com/questions/1702260/losing-vb-net-my-settings-with-each-new-clickonce-deployment-release
+        If My.Settings.MustUpgrade Then
+            My.Settings.Upgrade()
+            My.Settings.MustUpgrade = False
+            My.Settings.Save()
+        End If
+    End Sub
+
+    Private Sub FrmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        My.Settings.Save()
+        'just some debug logging
+        'If Flag Then
+        '    PrintLog($"Width: {Width}    Height: {Height}{vbLf}")
+        '    'With DgvRecords
+        '    '    For j = 0 To 7
+        '    '        For k = 0 To 5
+        '    '            PrintLog($"Row {j}. Cell {k}. Width: { .Rows(j).Cells(k).Size.Width}   Height: { .Rows(j).Cells(k).Size.Height}{vbLf}")
+        '    '        Next
+        '    '        Application.DoEvents()
+        '    '    Next
+        '    'End With
+        'End If
+        SaveLogs()
+    End Sub
+
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         UpgradeMySettings()
         CreateProgramFolders()
@@ -33,7 +62,7 @@ Public Class FrmMain
         End If
     End Sub
 
-    Public Sub RunPostEvents()
+    Private Sub RunPostEvents()
         CreateRecordsGrid()
 
         'get our initial record data
@@ -75,6 +104,13 @@ Public Class FrmMain
         TmrClock.Start()
     End Sub
 
+    Private Sub SetMonthlyRollover()
+        Dim intMo = New Date(Now.Year, Now.Month, Date.DaysInMonth(Now.Year, Now.Month)).AddHours(23).AddMinutes(59).AddSeconds(58)
+        _MoEndTime = New DateTime(intMo.Year, intMo.Month, intMo.Day, intMo.Hour, intMo.Minute, intMo.Second, 0)
+        _moFlag = True
+        PrintLog($"< == > End of month time set: {intMo}{vbLf}")
+    End Sub
+
     Private Sub TmrClock_Elapsed(sender As Object, e As Timers.ElapsedEventArgs) Handles TmrClock.Elapsed
 
         TsslRecordUpdate.Text = If _
@@ -105,59 +141,10 @@ Public Class FrmMain
 
     End Sub
 
-    ''' <summary>
-    ''' Automatically upgrade application settings for new versions
-    ''' </summary>
-    Private Shared Sub UpgradeMySettings()
-        'https://stackoverflow.com/questions/1702260/losing-vb-net-my-settings-with-each-new-clickonce-deployment-release
-        If My.Settings.MustUpgrade Then
-            My.Settings.Upgrade()
-            My.Settings.MustUpgrade = False
-            My.Settings.Save()
-        End If
-    End Sub
-
-    Private Sub FrmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        My.Settings.Save()
-        'just some debug logging
-        'If Flag Then
-        '    PrintLog($"Width: {Width}    Height: {Height}{vbLf}")
-        '    'With DgvRecords
-        '    '    For j = 0 To 7
-        '    '        For k = 0 To 5
-        '    '            PrintLog($"Row {j}. Cell {k}. Width: { .Rows(j).Cells(k).Size.Width}   Height: { .Rows(j).Cells(k).Size.Height}{vbLf}")
-        '    '        Next
-        '    '        Application.DoEvents()
-        '    '    Next
-        '    'End With
-        'End If
-        SaveLogs()
-    End Sub
-
 #Region "Settings"
 
-    Private Sub WeatherBridgeSettings(sender As Object, e As EventArgs) Handles TxtAmbientApiKey.TextChanged, TxtAmbientAppKey.TextChanged, TxtWbIP.TextChanged, TxtWbLogin.TextChanged, TxtWbPassword.TextChanged, TxtStationName.TextChanged, TxtYearStarted.TextChanged
-        Dim ni = DirectCast(sender, TextBox)
-        Select Case CInt(ni.Tag)
-            Case 0
-                My.Settings.ApiKey = TxtAmbientApiKey.Text
-            Case 1
-                My.Settings.AppKey = TxtAmbientAppKey.Text
-            Case 2
-                My.Settings.wbIp = TxtWbIP.Text
-            Case 3
-                My.Settings.wbLogin = TxtWbLogin.Text
-            Case 4
-                My.Settings.wbPassword = TxtWbPassword.Text
-            Case 5
-                My.Settings.AmbientStationName = TxtStationName.Text
-                TpAmbient.Text = My.Settings.AmbientStationName
-            Case 6
-                My.Settings.YearStarted = TxtYearStarted.Text
-            Case Else
-                Return
-        End Select
-
+    Private Sub NumAmbientUpdate_ValueChanged(sender As Object, e As EventArgs) Handles NumAmbientUpdate.ValueChanged
+        My.Settings.AmbientUpdateInt = CInt(NumAmbientUpdate.Value)
         My.Settings.Save()
     End Sub
 
@@ -171,18 +158,13 @@ Public Class FrmMain
         ct.Select(0, ct.Text.Length)
     End Sub
 
-    Private Sub NumWbInterval_ValueChanged(sender As Object, e As EventArgs) Handles NumArchiveInterval.ValueChanged
-        My.Settings.ArcUpDateInt = CInt(NumArchiveInterval.Value)
-        My.Settings.Save()
-    End Sub
-
-    Private Sub NumAmbientUpdate_ValueChanged(sender As Object, e As EventArgs) Handles NumAmbientUpdate.ValueChanged
-        My.Settings.AmbientUpdateInt = CInt(NumAmbientUpdate.Value)
-        My.Settings.Save()
-    End Sub
-
     Private Sub NumHrUdt_ValueChanged(sender As Object, e As EventArgs) Handles NumRecordUpdate.ValueChanged
         My.Settings.RecUpDateInt = CInt(NumRecordUpdate.Value)
+        My.Settings.Save()
+    End Sub
+
+    Private Sub NumWbInterval_ValueChanged(sender As Object, e As EventArgs) Handles NumArchiveInterval.ValueChanged
+        My.Settings.ArcUpDateInt = CInt(NumArchiveInterval.Value)
         My.Settings.Save()
     End Sub
 
@@ -190,18 +172,6 @@ Public Class FrmMain
         My.Settings.WbUpdateInt = CInt(NumWbUpdateInt.Value)
         My.Settings.Save()
     End Sub
-
-    'Private Sub ChkEnableAmbient_CheckedChanged(sender As Object, e As EventArgs) Handles ChkEnableAmbient.CheckedChanged
-    '    My.Settings.AmbientEnable = ChkEnableAmbient.Checked
-    '    AmbientEnable = ChkEnableAmbient.Checked
-    '    My.Settings.Save()
-    'End Sub
-
-    'Private Sub ChkLogHdrData_CheckedChanged(sender As Object, e As EventArgs) Handles ChkLogHdrData.CheckedChanged
-    '    My.Settings.LogHdrData = ChkLogHdrData.Checked
-    '    LogHdrData = ChkLogHdrData.Checked
-    '    My.Settings.Save()
-    'End Sub
 
     Private Sub ProcessesEnabled(sender As Object, e As EventArgs) Handles ChkEnableAmbient.CheckedChanged, ChkEnableWb.CheckedChanged, ChkLogHdrData.CheckedChanged
         Dim ni = DirectCast(sender, CheckBox)
@@ -221,9 +191,41 @@ Public Class FrmMain
         My.Settings.Save()
     End Sub
 
+    Private Sub WeatherBridgeSettings(sender As Object, e As EventArgs) Handles TxtAmbientApiKey.TextChanged, TxtAmbientAppKey.TextChanged, TxtWbIP.TextChanged, TxtWbLogin.TextChanged, TxtWbPassword.TextChanged, TxtStationName.TextChanged
+        Dim ni = DirectCast(sender, TextBox)
+        Select Case CInt(ni.Tag)
+            Case 0
+                My.Settings.ApiKey = TxtAmbientApiKey.Text
+            Case 1
+                My.Settings.AppKey = TxtAmbientAppKey.Text
+            Case 2
+                My.Settings.wbIp = TxtWbIP.Text
+            Case 3
+                My.Settings.wbLogin = TxtWbLogin.Text
+            Case 4
+                My.Settings.wbPassword = TxtWbPassword.Text
+            Case 5
+                My.Settings.AmbientStationName = TxtStationName.Text
+                TpAmbient.Text = My.Settings.AmbientStationName
+            Case Else
+                Return
+        End Select
+
+        My.Settings.Save()
+    End Sub
+
 #End Region
 
 #Region "Midnight"
+
+    Private Sub SetMidnightRollover()
+        'set the timer for the midnight event
+        Dim st = New DateTime(Now.Year, Now.Month, Now.Day, 0, 0, 1).AddDays(1)
+        Dim _int = Date2Unix(st) - Date2Unix(Now)
+        TmrMidnight.Interval = TimeSpan.FromSeconds(_int).TotalMilliseconds
+        TmrMidnight.Start()
+        PrintLog($"=> Set midnight rollover: {st} -> Interval: {_int} seconds{vbLf}")
+    End Sub
 
     Private Sub TmrMidnight_Elapsed(sender As Object, e As Timers.ElapsedEventArgs) Handles TmrMidnight.Elapsed
         TmrMidnight.Stop()
@@ -250,33 +252,12 @@ Public Class FrmMain
         SaveLogs()
     End Sub
 
-    Private Sub SetMidnightRollover()
-        'set the timer for the midnight event
-        Dim st = New DateTime(Now.Year, Now.Month, Now.Day, 0, 0, 1).AddDays(1)
-        Dim _int = Date2Unix(st) - Date2Unix(Now)
-        TmrMidnight.Interval = TimeSpan.FromSeconds(_int).TotalMilliseconds
-        TmrMidnight.Start()
-        PrintLog($"=> Set midnight rollover: {st} -> Interval: {_int} seconds{vbLf}")
-    End Sub
-
 #End Region
-
-    Private Sub SetMonthlyRollover()
-        Dim intMo = New Date(Now.Year, Now.Month, Date.DaysInMonth(Now.Year, Now.Month)).AddHours(23).AddMinutes(59).AddSeconds(58)
-        _MoEndTime = New DateTime(intMo.Year, intMo.Month, intMo.Day, intMo.Hour, intMo.Minute, intMo.Second, 0)
-        _moFlag = True
-        PrintLog($"< == > End of month time set: {intMo}{vbLf}")
-    End Sub
 
 #Region "Update Timers"
 
-    Private Sub TmrRecUpdate_Elapsed(sender As Object, e As Timers.ElapsedEventArgs) Handles TmrRecUpdate.Elapsed
-        'reset countdown timer
-        RecDuration = New TimeSpan(0, My.Settings.RecUpDateInt, 0)
-        RecNextUpdate = Date.Now + RecDuration
-        RunRecordUpdateEvents()
-        PrintLog($"Records updated @ {Now:F}{vbLf}")
-        SaveLogs()
+    Private Sub BtnRunEvents_Click(sender As Object, e As EventArgs) Handles BtnRunEvents.Click
+        RunPostEvents()
     End Sub
 
     Private Sub RunRecordUpdateEvents()
@@ -301,6 +282,12 @@ Public Class FrmMain
         Next
     End Sub
 
+    Private Sub TmrAmbUpdate_Elapsed(sender As Object, e As Timers.ElapsedEventArgs) Handles TmrAmbUpdate.Elapsed
+        AmbDuration = New TimeSpan(0, My.Settings.AmbientUpdateInt, 0)
+        AmbNextUpdate = Date.Now + AmbDuration
+        FetchAmbientData()
+    End Sub
+
     Private Sub TmrArcUpdate_Elapsed(sender As Object, e As Timers.ElapsedEventArgs) Handles TmrArcUpdate.Elapsed
         'reset countdown timer
         ArcDuration = New TimeSpan(0, 0, My.Settings.ArcUpDateInt)
@@ -308,20 +295,19 @@ Public Class FrmMain
         WriteCurrentData()
     End Sub
 
-    Private Sub TmrAmbUpdate_Elapsed(sender As Object, e As Timers.ElapsedEventArgs) Handles TmrAmbUpdate.Elapsed
-        AmbDuration = New TimeSpan(0, My.Settings.AmbientUpdateInt, 0)
-        AmbNextUpdate = Date.Now + AmbDuration
-        FetchAmbientData()
+    Private Sub TmrRecUpdate_Elapsed(sender As Object, e As Timers.ElapsedEventArgs) Handles TmrRecUpdate.Elapsed
+        'reset countdown timer
+        RecDuration = New TimeSpan(0, My.Settings.RecUpDateInt, 0)
+        RecNextUpdate = Date.Now + RecDuration
+        RunRecordUpdateEvents()
+        PrintLog($"Records updated @ {Now:F}{vbLf}")
+        SaveLogs()
     End Sub
 
     Private Sub TmrWbUpdate_Elapsed(sender As Object, e As Timers.ElapsedEventArgs) Handles TmrWbUpdate.Elapsed
         wbDuration = New TimeSpan(0, My.Settings.WbUpdateInt, 0)
         wbNextUpdate = Date.Now + wbDuration
         LoadWbStationData()
-    End Sub
-
-    Private Sub BtnRunEvents_Click(sender As Object, e As EventArgs) Handles BtnRunEvents.Click
-        RunPostEvents()
     End Sub
 
 #End Region
