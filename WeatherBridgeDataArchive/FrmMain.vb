@@ -261,6 +261,12 @@ Public Class FrmMain
     End Sub
 
     Private Sub RunRecordUpdateEvents()
+        'UpdateHourHiLo()
+        'UpdateDailyHiLo()
+        'UpdateYesterdayHiLo()
+        'UpdateMonthHiLo()
+        'UpDateYearHiLo()
+        'UpdateAllTimeHiLo()
         For j = 0 To 5
             Select Case j
                 Case 0

@@ -35,7 +35,7 @@ Friend Module AmbientRoutines
 
         Dim resp As String
 
-        Dim Use_Agent As String = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36 Edg/85.0.564.44"
+        Dim Use_Agent As String = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74"
 
         Try
             PrintLog($"Fetching Ambient Weather data @ {Now:T}.{vbLf}")
@@ -57,7 +57,7 @@ Friend Module AmbientRoutines
                     Next
                     PrintLog($"{My.Resources.separator}{vbLf}{vbLf}")
                 End If
-                If response.StatusCode = 200 Then
+                If response.StatusCode = HttpStatusCode.OK Then
                     Dim dStr = response.GetResponseStream()
                     Using reader = New StreamReader(dStr)
                         resp = (Await reader.ReadToEndAsync()).Replace("dateutc", "da-eutc").Replace("date", "dateZ").Replace("da-eutc", "dateutc")

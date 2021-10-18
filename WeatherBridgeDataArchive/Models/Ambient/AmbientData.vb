@@ -51,6 +51,10 @@ Namespace Models.Ambient
 
         <JsonProperty("pm25", NullValueHandling:=NullValueHandling.Ignore)> Public Property Pm25 As Integer
 
+        <JsonProperty("pm25_in_24h", NullValueHandling:=NullValueHandling.Ignore)> Public Property Pm25In24Hr As Double?
+
+        <JsonProperty("pm25_in", NullValueHandling:=NullValueHandling.Ignore)> Public Property Pm25In As Integer
+
         <JsonProperty("baromrelin", NullValueHandling:=NullValueHandling.Ignore)> Public Property BaromRelIn As Double?
 
         <JsonProperty("baromabsin", NullValueHandling:=NullValueHandling.Ignore)> Public Property BaromAbsIn As Double?
@@ -77,6 +81,8 @@ Namespace Models.Ambient
 
         <JsonProperty("feelsLike", NullValueHandling:=NullValueHandling.Ignore)> Public Property FeelsLike As Double?
 
+        <JsonProperty("feelsLikein", NullValueHandling:=NullValueHandling.Ignore)> Public Property FeelsLikeIn As Double?
+
         <JsonProperty("dewPoint", NullValueHandling:=NullValueHandling.Ignore)> Public Property DewPoint As Double?
 
         <JsonProperty("dewPointin", NullValueHandling:=NullValueHandling.Ignore)> Public Property DewPointIn As Double?
@@ -87,7 +93,7 @@ Namespace Models.Ambient
 
         <JsonProperty("dateZ", NullValueHandling:=NullValueHandling.Ignore)> Public Property DateZ As DateTimeOffset
 
-        <JsonProperty("date", NullValueHandling:=NullValueHandling.Ignore)> Public Property fDate As DateTimeOffset
+        <JsonProperty("date", NullValueHandling:=NullValueHandling.Ignore)> Public Property FDate As DateTimeOffset
 
         <JsonProperty("deviceId", NullValueHandling:=NullValueHandling.Ignore)> Public Property DeviceId As String
     End Class
@@ -142,7 +148,7 @@ Namespace Models.Ambient
 
     Friend Module Converter
 
-        Public ReadOnly Settings As JsonSerializerSettings = New JsonSerializerSettings With {
+        Public ReadOnly Settings As New JsonSerializerSettings With {
             .MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
             .DateParseHandling = DateParseHandling.None,
             .Converters = {New IsoDateTimeConverter With {.DateTimeStyles = DateTimeStyles.AssumeUniversal}}

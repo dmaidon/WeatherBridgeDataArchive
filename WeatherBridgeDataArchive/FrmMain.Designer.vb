@@ -164,7 +164,6 @@ Partial Class FrmMain
         Me.DgvRecords.ColumnHeadersHeight = 19
         Me.DgvRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.DgvRecords.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column0, Me.Column1, Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.Column4, Me.Column5})
-        Me.DgvRecords.Enabled = False
         Me.DgvRecords.Location = New System.Drawing.Point(3, 3)
         Me.DgvRecords.Margin = New System.Windows.Forms.Padding(4)
         Me.DgvRecords.MaximumSize = New System.Drawing.Size(985, 390)

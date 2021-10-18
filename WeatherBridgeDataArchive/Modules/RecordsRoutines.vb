@@ -27,6 +27,7 @@ Friend Module RecordsRoutines
                 .Rows(j).Cells(0).Style.BackColor = Color.Gainsboro
                 Application.DoEvents()
             Next
+            .ClearSelection()
         End With
     End Sub
 
@@ -34,8 +35,7 @@ Friend Module RecordsRoutines
         Try
             With FrmMain.DgvRecords
                 Dim provider As CultureInfo = CultureInfo.InvariantCulture
-                Dim a As String
-                Dim b As String
+                Dim a, b As String
                 a = Gwd("th*temp-amaxtime:*")
                 a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
                 b = Gwd("th*temp-amintime:*")
@@ -46,7 +46,7 @@ Friend Module RecordsRoutines
                 .Rows(1).Cells(1).Value = $"{Gwd("th*temp-amax=F.1:*")}°F{vbLf}{a}"
                 .Rows(2).Cells(1).Value = $"{Gwd("th*temp-amin=F.1:*")}°F{vbLf}{b}"
 
-                a = Gwd("wind*wind-ymaxtime:*")
+                a = Gwd("wind*wind-amaxtime:*")
                 a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
                 .Rows(3).Cells(1).Value = $"{Gwd("wind*wind-amax=mph.1:*")} mph{vbLf}{a}"
                 .Rows(4).Cells(1).Value = $"{Gwd("rain*total-allsum=in.2:*")} in"
@@ -59,6 +59,7 @@ Friend Module RecordsRoutines
                 .Rows(5).Cells(1).Value = $"{Gwd("wind*chill-amin=F.1:*")}°F{vbLf}{a}"
                 .Rows(6).Cells(1).Value = $"{Gwd("th*heatindex-amax=F.1:*")}°F{vbLf}{b}"
                 .Rows(7).Cells(1).Value = $"Hi: {Gwd("thb*press-amax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-amin=inHg.2:*")} in"
+                .ClearSelection()
             End With
             'MsgBox($"{CDate(Gwd("th*temp-starttime")):yyyy}")
         Catch ex As Exception
@@ -72,9 +73,7 @@ Friend Module RecordsRoutines
         Try
             With FrmMain.DgvRecords
                 Dim provider As CultureInfo = CultureInfo.InvariantCulture
-                Dim a As String
-                Dim b As String
-
+                Dim a, b As String
                 a = Gwd("th*temp-dmaxtime:*")
                 a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt2, CultureInfo.CurrentCulture)})")
                 b = Gwd("th*temp-dmintime:*")
@@ -99,7 +98,7 @@ Friend Module RecordsRoutines
                 .Rows(5).Cells(5).Value = $"{Gwd("wind*chill-dmin=F.1:*")}°F{vbLf}{a}"
                 .Rows(6).Cells(5).Value = $"{Gwd("th*heatindex-dmax=F.1:*")}°F{vbLf}{b}"
                 .Rows(7).Cells(5).Value = $"Hi: {Gwd("thb*press-dmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-dmin=inHg.2:*")} in"
-
+                .ClearSelection()
             End With
         Catch ex As Exception When TypeOf ex Is ArgumentNullException OrElse TypeOf ex Is FormatException OrElse TypeOf ex Is ArgumentOutOfRangeException
             PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)
@@ -127,7 +126,7 @@ Friend Module RecordsRoutines
                 .Rows(5).Cells(6).Value = $"{Gwd("wind*chill-hmin=F.1:*")}°F"
                 .Rows(6).Cells(6).Value = $"{Gwd("th*heatindex-hmax=F.1:*")}°F"
                 .Rows(7).Cells(6).Value = $"Hi: {Gwd("thb*press-hmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-hmin=inHg.2:*")} in"
-
+                .ClearSelection()
                 PrintLog($"Updated Records @ {Now:F}{vbLf}")
             End With
         Catch ex As Exception
@@ -142,8 +141,7 @@ Friend Module RecordsRoutines
         Try
             With FrmMain.DgvRecords
                 Dim provider As CultureInfo = CultureInfo.InvariantCulture
-                Dim a As String
-                Dim b As String
+                Dim a, b As String
                 a = Gwd("th*temp-mmaxtime:*")
                 a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
                 b = Gwd("th*temp-mmintime:*")
@@ -168,6 +166,7 @@ Friend Module RecordsRoutines
                 .Rows(5).Cells(3).Value = $"{Gwd("wind*chill-mmin=F.1:*")}°F{vbLf}{a}"
                 .Rows(6).Cells(3).Value = $"{Gwd("th*heatindex-mmax=F.1:*")}°F{vbLf}{b}"
                 .Rows(7).Cells(3).Value = $"Hi: {Gwd("thb*press-mmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-mmin=inHg.2:*")} in"
+                .ClearSelection()
             End With
         Catch ex As Exception
             PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)
@@ -181,8 +180,7 @@ Friend Module RecordsRoutines
         Try
             With FrmMain.DgvRecords
                 Dim provider As CultureInfo = CultureInfo.InvariantCulture
-                Dim a As String
-                Dim b As String
+                Dim a, b As String
                 a = Gwd("th*temp-ymaxtime:*")
                 a = If(a = "*", "", $"({Date.ParseExact(a, fmt1, provider).ToString(fmt3, CultureInfo.CurrentCulture)})")
                 b = Gwd("th*temp-ymintime:*")
@@ -206,6 +204,7 @@ Friend Module RecordsRoutines
                 .Rows(5).Cells(2).Value = $"{Gwd("wind*chill-ymin=F.1:*")}°F{vbLf}{a}"
                 .Rows(6).Cells(2).Value = $"{Gwd("th*heatindex-ymax=F.1:*")}°F{vbLf}{b}"
                 .Rows(7).Cells(2).Value = $"Hi: {Gwd("thb*press-ymax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-ymin=inHg.2:*")} in"
+                .ClearSelection()
             End With
         Catch ex As Exception
             PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)
@@ -248,6 +247,7 @@ Friend Module RecordsRoutines
                 .Rows(5).Cells(4).Value = $"{Gwd("wind*chill-ydmin=F.1:*")}°F{vbLf}{a}"
                 .Rows(6).Cells(4).Value = $"{Gwd("th*heatindex-ydmax=F.1:*")}°F{vbLf}{b}"
                 .Rows(7).Cells(4).Value = $"Hi: {Gwd("thb*press-ydmax=inHg.2:*")} in{vbLf}Lo: {Gwd("thb*press-ydmin=inHg.2:*")} in"
+                .ClearSelection()
             End With
         Catch ex As Exception
             PrintErr(ex.Message, ex.TargetSite.ToString, ex.StackTrace, ex.GetBaseException().ToString(), ex.HelpLink, ex.Data.ToString)

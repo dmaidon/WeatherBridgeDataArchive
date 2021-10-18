@@ -1,4 +1,5 @@
-﻿Imports System
+﻿Imports System.Resources
+Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
@@ -12,7 +13,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("PAROLE Software")>
 <Assembly: AssemblyProduct("WeatherBridge Data Archive")>
-<Assembly: AssemblyCopyright("Copyright ©  2020")>
+<Assembly: AssemblyCopyright("Copyright ©  2021")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -31,5 +32,6 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("21.2.23.243")>
-<Assembly: AssemblyFileVersion("21.2.23.243")>
+<Assembly: AssemblyVersion("21.8.6.257")>
+<Assembly: AssemblyFileVersion("21.8.6.257")>
+<Assembly: NeutralResourcesLanguage("en-US")>
