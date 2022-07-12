@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("PAROLE Software")>
 <Assembly: AssemblyProduct("WeatherBridge Data Archive")>
-<Assembly: AssemblyCopyright("Copyright ©  2021")>
+<Assembly: AssemblyCopyright("Copyright ©  2022")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -31,6 +31,6 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("21.8.6.257")>
-<Assembly: AssemblyFileVersion("21.8.6.257")>
+<Assembly: AssemblyVersion("22.7.12.258")>
+<Assembly: AssemblyFileVersion("22.7.12.258")>
 <Assembly: NeutralResourcesLanguage("en-US")>
