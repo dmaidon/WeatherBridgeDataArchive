@@ -50,6 +50,7 @@ Namespace Modules
         End Sub
 
 #Region "ResizeImage"
+
         ''https://stackoverflow.com/questions/2144592/resizing-images-in-vb-net
         ''Public Function ResizeImage(SourceImage As Drawing.Image, TargetWidth As Int32, TargetHeight As Int32) As Drawing.Bitmap
         ''    Using bmSource As New Bitmap(SourceImage)
@@ -94,6 +95,7 @@ Namespace Modules
         '        Return bmDest
         '    End Using
         'End Function
+
 #End Region
 
     End Module

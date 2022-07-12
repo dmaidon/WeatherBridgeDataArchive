@@ -1,5 +1,4 @@
-﻿Imports System.Globalization
-Imports System.IO
+﻿Imports System.IO
 Imports System.Security
 Imports System.Text
 
@@ -111,7 +110,6 @@ Friend Module LogRoutines
                     file.Delete()
                     PrintLog($">> Deleted: {file.FullName}.  Date: {file.CreationTime}{vbLf}")
                 Next
-
             Catch ex As Exception When _
                 TypeOf ex Is ArgumentException OrElse TypeOf ex Is ArgumentNullException OrElse TypeOf ex Is SecurityException _
                 OrElse TypeOf ex Is DirectoryNotFoundException

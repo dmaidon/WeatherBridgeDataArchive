@@ -15,21 +15,26 @@ Friend Module Globals
 
     'Records update
     Public RecDuration As TimeSpan
+
     Public RecNextUpdate As Date
 
     'archive update
     Public ArcDuration As TimeSpan
+
     Public ArcNextUpdate As Date
 
     'Ambient update
     Public AmbDuration As TimeSpan
+
     Public AmbNextUpdate As Date
 
     'Weatherbridge update
     Public wbDuration As TimeSpan
+
     Public wbNextUpdate As Date
 
     'flag to make sure options have been set
     Public Flag As Boolean
+
     Public AmbientEnable, WbEnable, LogHdrData As Boolean
 End Module

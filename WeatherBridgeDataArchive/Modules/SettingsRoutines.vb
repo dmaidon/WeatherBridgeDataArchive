@@ -1,5 +1,4 @@
-﻿Imports System.Globalization
-Imports System.IO
+﻿Imports System.IO
 
 Friend Module SettingsRoutines
 
@@ -45,7 +44,7 @@ Friend Module SettingsRoutines
                     .NumRecordUpdate.Value = 30
                 End If
 
-                'default Ambient update set to 60 minutes   
+                'default Ambient update set to 60 minutes
                 .NumAmbientUpdate.Value = My.Settings.AmbientUpdateInt
                 If My.Settings.AmbientUpdateInt <= 0 Then
                     My.Settings.AmbientUpdateInt = 60
@@ -94,7 +93,7 @@ Friend Module SettingsRoutines
     End Sub
 
     ''' <summary>
-    ''' Make sure that all the required folders exist.  
+    ''' Make sure that all the required folders exist.
     ''' </summary>
     Public Sub CreateProgramFolders()
         ArcDirYr = Path.Combine(ArcDir, CType(Now.Year, String))

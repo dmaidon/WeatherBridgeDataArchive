@@ -1,6 +1,4 @@
-﻿
-
-Imports System.Globalization
+﻿Imports System.Globalization
 Imports System.Net
 Imports System.Net.Sockets
 
@@ -51,7 +49,6 @@ Friend Module Miscellaneous
         Dim cardinals As New List(Of String)({"N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N"})
         Return cardinals(CInt(Math.Truncate(Math.Round((num Mod 3600) / 225))))
     End Function
-
 
     Friend Function IsDomainAlive(aDomain As String, aTimeoutSeconds As Integer) As Boolean
         'https://stackoverflow.com/questions/1500955/adjusting-httpwebrequest-connection-timeout-in-c-sharp
